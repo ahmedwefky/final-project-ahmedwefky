@@ -6,6 +6,6 @@ make -C buildroot savedefconfig BR2_DEFCONFIG=../buildroot_external/configs/rpi4
 
 echo "Saving Linux kernel config"
 make -C buildroot linux-savedefconfig
-cp output/build/linux-*/defconfig ../buildroot_external/configs/rpi4_linux.config
+cp buildroot/output/build/linux-*/defconfig buildroot_external/configs/rpi4_linux.config
 
 echo "Configs saved."
