@@ -1,0 +1,4 @@
+config BR2_PACKAGE_AESD_APP
+	bool "aesd-application"
+	help
+	  Includes the final project application in the kernel image.
