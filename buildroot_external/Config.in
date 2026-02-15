@@ -1,5 +1,1 @@
-config BR2_PACKAGE_REACTION_TIME_MEASUREMENT_DRIVER
-	bool "reaction_time_measurement_driver"
-	depends on BR2_LINUX_KERNEL
-	help
-	  Kernel module for the reaction time measurement application.
+source "$BR2_EXTERNAL_REACTION_TIME_MEASUREMENT_APPLICATION_PATH/package/react_driver/Config.in"

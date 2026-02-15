@@ -1,1 +1,0 @@
-obj-m += react_driver.o
