@@ -1,0 +1,7 @@
+REACT_DRIVER_VERSION = 1.0
+REACT_DRIVER_SITE = $(BR2_EXTERNAL_REACTION_MEASUREMENT_APPLICATION_PATH)/package/react_driver/src
+REACT_DRIVER_SITE_METHOD = local
+REACT_DRIVER_LICENSE = GPL-2.0
+
+$(eval $(kernel-module))
+$(eval $(generic-package))
