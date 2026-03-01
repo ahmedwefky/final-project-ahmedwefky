@@ -1,1 +1,2 @@
 source "$BR2_EXTERNAL_REACTION_TIME_MEASUREMENT_APPLICATION_PATH/package/react_driver/Config.in"
+source "$BR2_EXTERNAL_REACTION_TIME_MEASUREMENT_APPLICATION_PATH/package/react_app/Config.in"

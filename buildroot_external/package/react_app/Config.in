@@ -1,0 +1,7 @@
+config BR2_PACKAGE_REACT_APP
+	bool "react_app"
+	help
+	  Simple userspace program for the reaction time measurement application.
+	  When enabled the application will be built and installed under
+	  /usr/bin/react_app.  It opens /dev/react_driver, waits a random
+	  interval, arms the driver, and reports the measured reaction time.
