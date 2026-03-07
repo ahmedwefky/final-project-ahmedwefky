@@ -5,12 +5,12 @@ REACT_APP_SITE = $(BR2_EXTERNAL_REACTION_TIME_MEASUREMENT_APPLICATION_PATH)/pack
 REACT_APP_SITE_METHOD = local
 REACT_APP_LICENSE = MIT
 
-REACT_APP_DEPENDENCIES =
+REACT_APP_DEPENDENCIES = paho-mqtt-c
 
 # Use the generic build system which simply invokes 'make' in the directory
 # containing the source code.
 define REACT_APP_BUILD_CMDS
-	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -o $(@D)/react_app $(@D)/react_app.c
+	$(TARGET_CC) $(TARGET_CFLAGS) $(TARGET_LDFLAGS) -lpaho-mqtt3c -o $(@D)/react_app $(@D)/react_app.c
 endef
 
 define REACT_APP_CLEAN_CMDS
