@@ -25,7 +25,7 @@ then
 else
 	echo "\nUSING EXISTING BUILDROOT CONFIG\n"
 	START_TIME=$(date +%s)
-	make -C buildroot BR2_EXTERNAL=../buildroot_external
+	make -C buildroot BR2_EXTERNAL=../buildroot_external -j$(nproc) -l$(nproc)
 	END_TIME=$(date +%s)
 	ELAPSED=$((END_TIME - START_TIME))
 	echo "\nBuild complete."
