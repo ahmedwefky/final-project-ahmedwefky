@@ -2,7 +2,8 @@
 
 set -e
 
-export BR2_DL_DIR="${HOME}/.dl"
+export BR2_DL_DIR="${HOME}/.buildroot_dl"
+export BR2_CCACHE_DIR="${HOME}/.buildroot-ccache"
 
 git submodule init
 git submodule sync
