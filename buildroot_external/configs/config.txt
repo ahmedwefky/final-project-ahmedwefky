@@ -1,0 +1,48 @@
+# Custom Raspberry Pi 4 Firmware Configuration
+# Configured for ARM64 (aarch64) with A/B OTA update support
+#
+# See http://elinux.org/RPiconfig for a complete description of config.txt syntax
+
+# Firmware files for Pi 4
+# (Defaults are used: start4.elf and fixup4.dat are automatically selected)
+
+# To use an external initramfs file (optional)
+#initramfs rootfs.cpio.gz
+
+# Disable overscan assuming the display supports displaying the full resolution
+# If the text shown on the screen disappears off the edge, comment this out
+disable_overscan=1
+
+# How much memory in MB to assign to the GPU on Pi models having
+# 256, 512 or 1024 MB total memory
+gpu_mem_256=100
+gpu_mem_512=100
+gpu_mem_1024=100
+
+# Enable UART0 for serial console on ttyAMA0
+# Useful for debugging U-Boot and early boot issues
+enable_uart=1
+
+# Pin core frequency to stabilize Mini UART baud rate
+core_freq_min=500
+
+# Force 64-bit mode (required for 64-bit U-Boot)
+arm_64bit=1
+
+# Enable RTC (optional)
+#dtoverlay=i2c-rtc,ds3231
+
+# Additional settings for A/B OTA updates
+# These can be customized based on your system requirements
+
+# Enable device tree compilation support
+# device_tree_address=0x100
+
+# Boot timeout (seconds before timeout)
+boot_delay=1
+
+# Serial number visibility
+#serial_number=0
+
+# Enable even earlier bootloader messages
+uart_2ndstage=1
