@@ -28,8 +28,7 @@
 /* Adafruit IO MQTT configuration */
 #define ADAFRUIT_IO_ADDRESS "tcp://io.adafruit.com:1883"
 #define ADAFRUIT_IO_USERNAME "awefky"
-#define ADAFRUIT_IO_KEY "aio_BbVY556zmueF1KYFfBUD3EWmowdS"
-#define ADAFRUIT_IO_FEED "awefky/feeds/reaction-time-measurement"
+#define ADAFRUIT_IO_FEED "awefky/feeds/reaction-time-measurement" 
 #define MQTT_CLIENTID "react_app_" "awefky" "_" "react_device"
 #define MQTT_QOS 1
 #define MQTT_TIMEOUT 10000L
@@ -76,6 +75,14 @@ static void publish_to_adafruit(uint64_t elapsed_ns)
     int rc;
     char payload[64];
 
+    char *io_key = getenv("ADAFRUIT_IO_KEY");
+
+    if (!io_key || (strlen(io_key) == 0))
+    {
+        fprintf(stderr, "Error: Adafruit IO Key not set in environment.\n");
+        return;
+    }
+
     /* Create MQTT client */
     rc = MQTTClient_create(&client, ADAFRUIT_IO_ADDRESS, MQTT_CLIENTID,
                           MQTTCLIENT_PERSISTENCE_NONE, NULL);
@@ -89,7 +96,7 @@ static void publish_to_adafruit(uint64_t elapsed_ns)
     conn_opts.keepAliveInterval = 20;
     conn_opts.cleansession = 1;
     conn_opts.username = ADAFRUIT_IO_USERNAME;
-    conn_opts.password = ADAFRUIT_IO_KEY;
+    conn_opts.password = io_key;
 
     /* Connect to broker */
     rc = MQTTClient_connect(client, &conn_opts);
