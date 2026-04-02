@@ -1,6 +1,6 @@
 # A/B OTA Update Guide
 
-This document explains the A/B (dual-partition) update strategy implemented for the Raspberry Pi 4. This strategy provides safe, atomic firmware updates with zero downtime and instant rollback capability.
+This document explains the A/B (dual-partition) update strategy implemented for the Raspberry Pi 0 W. This strategy provides safe, atomic firmware updates with zero downtime and instant rollback capability.
 
 ## Architecture
 

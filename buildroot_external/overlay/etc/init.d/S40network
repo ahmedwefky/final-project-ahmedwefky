@@ -1,0 +1,40 @@
+#!/bin/sh
+
+case "$1" in
+    start)
+        echo "Loading brcmfmac module..."
+        modprobe brcmfmac
+
+        echo "Bringing up loopback interface..."
+        ifup lo
+
+        echo "Starting wpa_supplicant..."
+        /usr/sbin/wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf
+
+        echo "Starting dhcpcd..."
+        /sbin/udhcpc -i  wlan0
+
+        iw dev wlan0 set power_save off || true
+        ;;
+    stop)
+        echo "Stopping dhcpcd..."
+        /sbin/dhcpcd -k wlan0
+
+        echo "Stopping wpa_supplicant..."
+        killall wpa_supplicant
+
+        echo "Taking down loopback interface..."
+        ifdown lo
+        ;;
+    restart|reload)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|reload}"
+        exit 1
+        ;;
+esac
+
+exit 0
+

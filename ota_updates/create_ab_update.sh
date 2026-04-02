@@ -6,7 +6,7 @@
 set -e
 
 # Configuration  
-PRIV_KEY="${HOME}/swupdate_key/private.pem"
+PRIV_KEY="${HOME}/ota_key/private.pem"
 PUB_KEY="./public.pem"
 ROOTFS_IMAGE="${2}"
 VERSION="${1}"

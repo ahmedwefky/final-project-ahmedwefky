@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # A/B Partition Manager for SWUpdate OTA
 # This script manages dual-partition system with U-Boot bootloader
 # Supports partition toggling, rollback, and health checking
@@ -39,15 +39,27 @@ log_error() {
 
 # Check if fw_setenv is available
 check_fw_tools() {
-    if ! command -v fw_setenv &> /dev/null; then
+    if ! command -v fw_setenv > /dev/null 2>&1; then
         log_error "fw_setenv not found. Please ensure u-boot-tools are installed."
         return 1
     fi
-    if ! command -v fw_getenv &> /dev/null; then
-        log_error "fw_getenv not found."
+    if ! command -v fw_printenv > /dev/null 2>&1 && ! command -v fw_getenv > /dev/null 2>&1; then
+        log_error "U-Boot environment read tool (fw_printenv or fw_getenv) not found."
         return 1
     fi
     return 0
+}
+
+# Internal helper to read U-Boot variables
+_fw_getenv() {
+    local var=$1
+    if command -v fw_printenv > /dev/null 2>&1; then
+        fw_printenv -n "$var" 2>/dev/null
+    elif command -v fw_getenv > /dev/null 2>&1; then
+        fw_getenv "$var" 2>/dev/null
+    else
+        return 1
+    fi
 }
 
 # Check if fw_env.config exists
@@ -64,7 +76,7 @@ get_active_partition() {
     check_fw_tools || return 1
     check_fw_config || return 1
     
-    local bootpart=$(fw_getenv "$BOOT_VAR" 2>/dev/null || echo "$PARTITION_A")
+    local bootpart=$(_fw_getenv "$BOOT_VAR" || echo "$PARTITION_A")
     # Ensure bootpart is either 2 or 3
     if [ "$bootpart" != "$PARTITION_A" ] && [ "$bootpart" != "$PARTITION_B" ]; then
         log_warn "Invalid bootpart value: $bootpart, defaulting to $PARTITION_A"
@@ -159,7 +171,7 @@ get_upgrade_status() {
     check_fw_tools || return 1
     check_fw_config || return 1
     
-    fw_getenv "$UPGRADE_VAR" 2>/dev/null || echo "0"
+    _fw_getenv "$UPGRADE_VAR" || echo "0"
 }
 
 # Reset bootcount for rollback detection
@@ -315,6 +327,4 @@ main() {
 }
 
 # Run if not sourced
-if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
-    main "$@"
-fi
+main "$@"

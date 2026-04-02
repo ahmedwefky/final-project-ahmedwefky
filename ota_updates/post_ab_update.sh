@@ -42,6 +42,10 @@ if [ -z "$FW_SETENV" ] || [ -z "$FW_GETENV" ]; then
     exit 1
 fi
 
+# Remount boot partition as read-write to allow environment updates
+echo "Remounting /boot as read-write..."
+mount -o remount,rw /boot
+
 # Get current active partition
 ACTIVE_PART=$($FW_GETENV bootpart 2>/dev/null || echo "2")
 if [ -z "$ACTIVE_PART" ]; then
@@ -70,6 +74,11 @@ $FW_SETENV upgrade_available 1 || true
 
 # Save NEXT_PART for potential rollback or diagnosis
 $FW_SETENV upgrade_partition "$NEXT_PART" || true
+
+# Ensure data is flushed and remount /boot as read-only for safety
+sync
+mount -o remount,ro /boot
+echo "Remounted /boot as read-only"
 
 echo "Post-update configuration: SUCCESS"
 echo "Device will boot from partition $NEXT_PART after reboot"

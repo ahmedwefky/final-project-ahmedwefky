@@ -50,6 +50,11 @@ fi
 echo "Unmounting partitions..."
 umount "${DEVICE}"* 2>/dev/null || true
 
+echo "Erasing existing signatures and partition table..."
+wipefs -a "$DEVICE" > /dev/null 2>&1 || true
+dd if=/dev/zero of="$DEVICE" bs=1M count=32 conv=fsync status=none
+echo "Erase complete."
+
 echo "Flashing image (this may take a few minutes)..."
 dd if=buildroot/output/images/sdcard.img of="$DEVICE" bs=4M status=progress conv=fsync
 

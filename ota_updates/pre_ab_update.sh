@@ -43,6 +43,10 @@ if [ -z "$FW_SETENV" ] || [ -z "$FW_GETENV" ]; then
     exit 1
 fi
 
+# Remount boot partition as read-write to allow environment updates
+echo "Remounting /boot as read-write..."
+mount -o remount,rw /boot
+
 # Get current active partition
 ACTIVE_PART=$($FW_GETENV bootpart 2>/dev/null || echo "2")
 if [ -z "$ACTIVE_PART" ]; then
@@ -90,6 +94,11 @@ echo "Resetting bootcount..."
 $FW_SETENV bootcount 0 || {
     echo "WARNING: Could not reset bootcount"
 }
+
+# Ensure data is flushed and remount /boot as read-only for safety
+sync
+mount -o remount,ro /boot
+echo "Remounted /boot as read-only"
 
 # Stop services that might interfere with root filesystem update
 echo "Stopping services..."

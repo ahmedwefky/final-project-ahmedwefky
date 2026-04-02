@@ -24,13 +24,13 @@ build_image()
 if [ ! -e buildroot/.config ]
 then
 	echo "\nMISSING BUILDROOT CONFIGURATION FILE\n"
-	if [ -e buildroot_external/configs/rpi4_buildroot_config ]
+	if [ -e buildroot_external/configs/rpi0_buildroot_config ]
 	then
-		echo "\nUsing existing rpi4_buildroot_config\n"
+		echo "\nUsing existing rpi0_buildroot_config\n"
 	else
 		echo "Warning: Config file not found in buildroot_external. Attempting to use default."
 	fi
-	make -C buildroot defconfig BR2_EXTERNAL=../buildroot_external BR2_DEFCONFIG=../buildroot_external/configs/rpi4_buildroot_config
+	make -C buildroot defconfig BR2_EXTERNAL=../buildroot_external BR2_DEFCONFIG=../buildroot_external/configs/rpi0_buildroot_config
 	build_image
 else
 	echo "\nUSING EXISTING BUILDROOT CONFIG\n"

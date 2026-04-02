@@ -12,8 +12,8 @@ setenv bootargs "console=ttyS0,115200 console=tty1 root=/dev/mmcblk0p${bootpart}
 
 # Load the kernel and Device Tree from the boot partition (FAT, 0:1)
 # Note: Standard Buildroot RPi builds put Image/DTB in the FAT partition, not rootfs.
-load mmc 0:1 ${kernel_addr_r} Image
-load mmc 0:1 ${fdt_addr_r} bcm2711-rpi-4-b.dtb
+load mmc 0:1 ${kernel_addr_r} zImage
+load mmc 0:1 ${fdt_addr_r} bcm2708-rpi-zero-w.dtb
 
-# Boot the kernel (using booti for ARM64 uncompressed kernel)
-booti ${kernel_addr_r} - ${fdt_addr_r}
+# Boot the kernel (using bootz for 32-bit ARM compressed kernel)
+bootz ${kernel_addr_r} - ${fdt_addr_r}

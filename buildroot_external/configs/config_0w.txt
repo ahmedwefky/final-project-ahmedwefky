@@ -1,10 +1,13 @@
-# Custom Raspberry Pi 4 Firmware Configuration
-# Configured for ARM64 (aarch64) with A/B OTA update support
+# Custom Raspberry Pi Zero W Firmware Configuration
+# Configured for ARMv6 (32-bit) with A/B OTA update support
 #
 # See http://elinux.org/RPiconfig for a complete description of config.txt syntax
 
-# Firmware files for Pi 4
-# (Defaults are used: start4.elf and fixup4.dat are automatically selected)
+# Firmware files for Pi Zero W
+start_file=start.elf
+fixup_file=fixup.dat
+
+kernel=kernel.img
 
 # To use an external initramfs file (optional)
 #initramfs rootfs.cpio.gz
@@ -19,15 +22,16 @@ gpu_mem_256=100
 gpu_mem_512=100
 gpu_mem_1024=100
 
-# Enable UART0 for serial console on ttyAMA0
-# Useful for debugging U-Boot and early boot issues
+# Enable UART and swap Bluetooth to miniuart to free up ttyAMA0 for console
 enable_uart=1
+dtoverlay=miniuart-bt
 
 # Pin core frequency to stabilize Mini UART baud rate
+# Required when using miniuart-bt
 core_freq_min=500
 
-# Force 64-bit mode (required for 64-bit U-Boot)
-arm_64bit=1
+# Disable 64-bit mode (Pi Zero W is 32-bit)
+arm_64bit=0
 
 # Enable RTC (optional)
 #dtoverlay=i2c-rtc,ds3231

@@ -19,14 +19,14 @@
 
 #define DRIVER_NAME "react_driver"
 
-/** Base offset to add to Broadcom GPIO numbers on Raspberry Pi 4. */
+/** Base offset to add to Broadcom GPIO numbers on Raspberry Pi zero w. */
 #define GPIO_BASE 512
 
 /** LED GPIO pin (physical/SoC offset + GPIO_BASE). */
-#define LED_GPIO 17 + GPIO_BASE
+#define LED_GPIO 22 + GPIO_BASE
 
 /** Button GPIO pin (physical/SoC offset + GPIO_BASE). */
-#define BTN_GPIO 27 + GPIO_BASE
+#define BTN_GPIO 23 + GPIO_BASE
 
 /** IRQ number associated with the button GPIO. */
 static int irq_number;
